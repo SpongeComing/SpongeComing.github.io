@@ -1,0 +1,75 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+.triangle_up { display:inline-block; text-indent: 20px; width: 0; height: 0; border-left: 4px solid transparent; border-right: 4px solid transparent; border-bottom:  4px solid red; }
+
+</style>
+<script type="text/javascript" src = 'moveShake.js'></script>
+<script>
+window.onload = function(){
+  var aCity = document.getElementsByTagName('a');
+  var oUl = document.getElementById('ul1');
+  var aLi = oUl.getElementsByTagName('li');
+
+  for (var i = 0; i < aCity.length; i++) {
+    aCity[i].onclick = function(){
+      if (mj(this.innerHTML)) {
+        var oLi = document.createElement('li');
+          oLi.innerHTML = this.innerHTML;
+        if ( !aLi[0]) {
+          oUl.appendChild(oLi);
+        }else{
+          oUl.insertBefore(oLi, aLi[0]);
+        }
+      // }else{
+      //
+      // }
+    }else{
+      mj2(this.innerHTML)
+    }
+  }
+}
+  function mj(text) {
+    var result = true;
+    for (var i = 0; i < aLi.length; i++) {
+      if (text == aLi[i].innerHTML) {
+        result =  false
+      }
+    }
+
+    return result;
+  }
+
+  function mj2(text) {
+    for (var i = 0; i < aLi.length; i++) {
+      if (text == aLi[i].innerHTML) {
+        oUl.insertBefore(aLi[i],aLi[0]);
+      }
+    }
+  }
+}
+
+
+
+</script>
+
+</head>
+
+<body >
+
+<a href="javascript:;">上海</a>
+<a href="javascript:;">北京</a>
+<a href="javascript:;">成都</a>
+<a href="javascript:;">杭州</a>
+<a href="javascript:;">南京</a>
+<a href="javascript:;">西安</a>
+
+<ul id="ul1">
+
+</ul>
+</body>
+</html>

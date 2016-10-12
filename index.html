@@ -1,43 +1,90 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>放大镜</title>
+  <style type="text/css">
+    #small_pic { width: 430px; height: 430px; position: relative; margin: 100px ; border: 1px solid #000;}
+    p { margin: 0; padding: 0; background: #ccc; opacity: 0.8; position: absolute; left: 0;top: 0; z-index: 2;  display: none;
+    }
 
-  <head>
-    <meta charset='utf-8'>
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <meta name="description" content="Spongecoming.GitHub.io : ">
+    #big_pic { width: 430px; height:430px; border: 1px solid #000; overflow: hidden; position: absolute; left: 630px; top: 100px; display: none;}
+    #big_pic img { position: absolute;}
+  </style>
+  <script type="text/javascript">
+    window.onload = function () {
+      var aImg = document.querySelectorAll('img');
+      var aDiv = document.querySelectorAll('div');
+      var oP = document.querySelector('p');
+      var scaleX = parseInt(getStyle(aImg[0],'width'))/parseInt(getStyle(aImg[1],'width'))
+      var scaleY = parseInt(getStyle(aImg[0],'height'))/parseInt(getStyle(aImg[1],'height'))
 
-    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+      aImg[0].onmouseover  =function () {
 
-    <title>Spongecoming.GitHub.io</title>
-  </head>
+        oP.style.display = 'block';
+        aDiv[1].style.display = 'block';
 
-  <body>
+        oP.style.width = parseInt(getStyle(aImg[0],'width')) * scaleX +'px';
+        oP.style.height = parseInt(getStyle(aImg[0],'height')) * scaleY +'px';
 
-    <!-- HEADER -->
-    <div id="header_wrap" class="outer">
-        <header class="inner">
-          <a id="forkme_banner" href="https://github.com/SpongeComing">View on GitHub</a>
+      };
 
-          <h1 id="project_title">Spongecoming.GitHub.io</h1>
-          <h2 id="project_tagline"></h2>
+       aDiv[0].onmousemove = function (ev) {
 
-        </header>
-    </div>
+        oP.style.display = 'block';
+        aDiv[1].style.display = 'block';
 
-    <!-- MAIN CONTENT -->
-    <div id="main_content_wrap" class="outer">
-      <section id="main_content" class="inner">
-      </section>
-    </div>
+          var ev = ev || event;
 
-    <!-- FOOTER  -->
-    <div id="footer_wrap" class="outer">
-      <footer class="inner">
-        <p>Published with <a href="https://pages.github.com">GitHub Pages</a></p>
-      </footer>
-    </div>
+          var L = ev.clientX - aDiv[0].offsetLeft - oP.offsetWidth/2;
+          var T = ev.clientY - aDiv[0].offsetTop - oP.offsetHeight/2;
 
-    
+          if (L<0) {
+            L = 0;
+          }else if (L>aDiv[0].offsetWidth - oP.offsetWidth-2) {
+            L = aDiv[0].offsetWidth - oP.offsetWidth-2;
+          }
 
-  </body>
+          if (T<0) {
+            T = 0;
+          }else if (T>aDiv[0].offsetHeight - oP.offsetHeight-2) {
+           T = aDiv[0].offsetHeight - oP.offsetHeight-2;
+          }
+          oP.style.left = L +'px';
+          oP.style.top = T +'px';
+
+          aImg[1].style.left = -L/scaleX + 'px';
+          aImg[1].style.top = -T/scaleY + 'px';
+        };
+
+        aDiv[0].onmouseout = function () {
+
+          oP.style.display = 'none';
+          aDiv[1].style.display = 'none';
+
+        }
+
+function getStyle( obj,attr){
+  if ( getComputedStyle ) {
+
+    return getComputedStyle( obj ,false)[ attr ];
+  }else{
+    return obj.currentStyle[ attr ];
+  }
+}
+
+}
+
+  </script>
+</head>
+<body>
+<div id="small_pic">
+  <img width="430" height="430" src="https://img.alicdn.com/bao/uploaded/i4/TB13Y8iFVXXXXXwapXXXXXXXXXX_!!0-item_pic.jpg" alt="刘亦菲图片"/>
+  <p></p>
+</div>
+
+  <div id="big_pic">
+    <img width="860" height="860" src="https://img.alicdn.com/bao/uploaded/i4/TB13Y8iFVXXXXXwapXXXXXXXXXX_!!0-item_pic.jpg" alt="刘亦菲图片"/>
+  </div>
+</body>
 </html>
